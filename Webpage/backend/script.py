@@ -60,7 +60,7 @@ def send_email(to_email, student_name, subjects_with_low_attendance):
         body = f"Dear {student_name},\n\n"
         
         if subjects_with_low_attendance:
-            body += "Le bete to inform you about your attendance concerns:\n\n"
+            body += "This is to inform you about your attendance concerns:\n\n"
             for subject, attendance_percentage in subjects_with_low_attendance:
                 body += f"- {subject}: {attendance_percentage}% attendance\n"
             
@@ -216,11 +216,12 @@ def process_attendance(attendance_threshold: int = 70):
 @app.post("/upload-csv/")
 async def upload_csv(file: UploadFile = File(...)):
     file_location = "students.csv"
-
     try:
         with open(file_location, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         logger.info(f"CSV file uploaded successfully to {file_location}")
+        process_attendance()
+        get_students()
         return {"message": "File uploaded successfully."}
     except Exception as e:
         logger.error(f"File upload failed: {e}")
@@ -229,6 +230,8 @@ async def upload_csv(file: UploadFile = File(...)):
 @app.get("/students")
 def get_students():
     try:
+        # Process attendance when fetching students
+        
         with open("students.csv", "r", encoding='utf-8') as file:
             reader = csv.DictReader(file)
             return list(reader)
@@ -237,9 +240,8 @@ def get_students():
         return {"error": "No students found"}
     
     
-csv_filename = "students.csv"
-read_csv_and_send_emails(csv_filename)
+
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)

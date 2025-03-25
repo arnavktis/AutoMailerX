@@ -1,109 +1,3 @@
-// 'use client'
-// import { useEffect, useState } from "react";
-
-// export default function Home() {
-//   const [students, setStudents] = useState([]);
-//   const [error, setError] = useState(null);
-//   const [file, setFile] = useState(null);
-//   const [uploading, setUploading] = useState(false);
-//   const [message, setMessage] = useState("");
-
-//   useEffect(() => {
-//     fetch("http://localhost:8000/students")
-//       .then((res) => {
-//         if (!res.ok) throw new Error("Failed to fetch students");
-//         return res.json();
-//       })
-//       .then((data) => setStudents(data))
-//       .catch((err) => setError(err.message));
-//   }, []);
-
-//   const handleFileChange = (event) => {
-//     setFile(event.target.files[0]);
-//   };
-
-//   const handleDrop = (event) => {
-//     event.preventDefault();
-//     const droppedFile = event.dataTransfer.files[0];
-//     if (droppedFile && droppedFile.type === "text/csv") {
-//       setFile(droppedFile);
-//     } else {
-//       alert("Please upload a valid CSV file.");
-//     }
-//   };
-
-//   const handleDragOver = (event) => {
-//     event.preventDefault();
-//   };
-
-//   const uploadFile = async () => {
-//     if (!file) {
-//       alert("Please select a file first.");
-//       return;
-//     }
-
-//     setUploading(true);
-//     setMessage("");
-
-//     const formData = new FormData();
-//     formData.append("file", file);
-
-//     try {
-//       const response = await fetch("http://localhost:8000/upload-csv/", {
-//         method: "POST",
-//         body: formData,
-//       });
-
-//       const result = await response.json();
-//       if (response.ok) {
-//         setMessage(result.message);
-//       } else {
-//         setMessage(result.detail || "File upload failed.");
-//       }
-//     } catch (error) {
-//       setMessage("Error uploading file.");
-//     } finally {
-//       setUploading(false);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Students List</h1>
-//       {error ? <p style={{ color: "red" }}>Error: {error}</p> : null}
-      
-//       {/* Drag & Drop or Upload CSV Section */}
-//       <div
-//         onDrop={handleDrop}
-//         onDragOver={handleDragOver}
-//         style={{
-//           border: "2px dashed gray",
-//           padding: "20px",
-//           textAlign: "center",
-//           marginBottom: "20px",
-//         }}
-//       >
-//         <p>Drag & drop a CSV file here or click to select</p>
-//         <input type="file" accept=".csv" onChange={handleFileChange} />
-//       </div>
-
-//       <button onClick={uploadFile} disabled={uploading}>
-//         {uploading ? "Uploading..." : "Upload CSV"}
-//       </button>
-
-//       {message && <p>{message}</p>}
-
-//       {/* Students List */}
-//       <ul>
-//         {students.map((student, index) => (
-//           <li key={index}>{JSON.stringify(student)}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
-
 'use client'
 import { useEffect, useState } from "react";
 
@@ -114,15 +8,18 @@ export default function Home() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    fetch("http://localhost:8000/students")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch students");
-        return res.json();
-      })
-      .then((data) => setStudents(data))
-      .catch((err) => setError(err.message));
-  }, []);
+  const fetchStudents = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/students");
+      if (!response.ok) throw new Error("Failed to fetch students");
+      const data = await response.json();
+      setStudents(data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setStudents([]);
+    }
+  };
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -163,6 +60,8 @@ export default function Home() {
       const result = await response.json();
       if (response.ok) {
         setMessage(result.message);
+        // Fetch students immediately after successful upload
+        await fetchStudents();
       } else {
         setMessage(result.detail || "File upload failed.");
       }
@@ -172,6 +71,10 @@ export default function Home() {
       setUploading(false);
     }
   };
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -210,7 +113,7 @@ export default function Home() {
             : 'bg-blue-500 text-white hover:bg-blue-600'
         } transition-colors`}
       >
-        {uploading ? "Uploading..." : "Upload CSV"}
+        {uploading ? "Sending Email..." : "Send Email"}
       </button>
 
       {message && (
@@ -230,7 +133,6 @@ export default function Home() {
           {students.map((student, index) => (
             <li 
               key={index} 
-              // className="bg-gray-900 p-3 rounded-md shadow-sm overflow-x-auto"
               style={styles.listItem}
             >
               {JSON.stringify(student)}
@@ -245,9 +147,9 @@ export default function Home() {
 const styles = {
   listItem: {
     backgroundColor: '#181818',
-    padding: '0.75rem', // equivalent to p-3
-    borderRadius: '0.375rem', // equivalent to rounded-md
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)', // equivalent to shadow-sm
+    padding: '0.75rem',
+    borderRadius: '0.375rem',
+    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
     overflowX: 'auto',
   },
 };
