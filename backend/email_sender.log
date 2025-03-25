@@ -1,0 +1,26 @@
+2025-03-25 21:27:17,292 - INFO: Attendance processing complete. Emails sent: 0, Failed: 0
+2025-03-25 21:27:31,183 - INFO: CSV file uploaded successfully to students.csv
+2025-03-25 21:35:25,929 - INFO: CSV file uploaded successfully to students.csv
+2025-03-25 21:35:25,930 - INFO: Found low attendance for Avneesh: [('Math', 2.0), ('Science', 3.0)]
+2025-03-25 21:35:37,393 - INFO: Email sent to Avneesh at avneesh0904@gmail.com
+2025-03-25 21:35:37,629 - INFO: Found low attendance for Arnav khanna: [('Math', 5.0), ('Science', 5.0)]
+2025-03-25 21:35:48,813 - INFO: Email sent to Arnav khanna at arnavktis@gmail.com
+2025-03-25 21:35:49,052 - INFO: Attendance processing complete. Emails sent: 2, Failed: 0
+2025-03-25 21:36:31,360 - INFO: CSV file uploaded successfully to students.csv
+2025-03-25 21:36:31,361 - INFO: Found low attendance for Avneesh: [('Math', 2.0), ('Science', 3.0)]
+2025-03-25 21:36:42,562 - INFO: Email sent to Avneesh at avneesh0904@gmail.com
+2025-03-25 21:36:42,801 - INFO: Found low attendance for Arnav khanna: [('Math', 5.0), ('Science', 5.0)]
+2025-03-25 21:36:53,922 - INFO: Email sent to Arnav khanna at arnavktis@gmail.com
+2025-03-25 21:36:54,158 - INFO: Attendance processing complete. Emails sent: 2, Failed: 0
+2025-03-25 21:37:34,251 - INFO: CSV file uploaded successfully to students.csv
+2025-03-25 21:37:34,251 - INFO: Found low attendance for Avneesh: [('Math', 2.0), ('Science', 3.0)]
+2025-03-25 21:37:45,256 - INFO: Email sent to Avneesh at avneesh0904@gmail.com
+2025-03-25 21:37:45,486 - INFO: Found low attendance for Arnav khanna: [('Math', 5.0), ('Science', 5.0)]
+2025-03-25 21:37:50,280 - INFO: Email sent to Arnav khanna at arnavktis@gmail.com
+2025-03-25 21:37:50,514 - INFO: Attendance processing complete. Emails sent: 2, Failed: 0
+2025-03-25 22:43:47,562 - INFO: CSV file uploaded successfully to students.csv
+2025-03-25 22:43:47,564 - INFO: Found low attendance for Avneesh: [('Math', 2.0), ('Science', 3.0)]
+2025-03-25 22:44:01,078 - INFO: Email sent to Avneesh at avneesh0904@gmail.com
+2025-03-25 22:44:01,320 - INFO: Found low attendance for Arnav khanna: [('Math', 5.0), ('Science', 5.0)]
+2025-03-25 22:44:14,373 - INFO: Email sent to Arnav khanna at arnavktis@gmail.com
+2025-03-25 22:44:14,611 - INFO: Attendance processing complete. Emails sent: 2, Failed: 0
