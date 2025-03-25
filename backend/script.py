@@ -221,7 +221,6 @@ async def upload_csv(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, buffer)
         logger.info(f"CSV file uploaded successfully to {file_location}")
         process_attendance()
-        get_students()
         return {"message": "File uploaded successfully."}
     except Exception as e:
         logger.error(f"File upload failed: {e}")
@@ -229,18 +228,15 @@ async def upload_csv(file: UploadFile = File(...)):
 
 @app.get("/students")
 def get_students():
-    try:
-        # Process attendance when fetching students
-        
-        with open("students.csv", "r", encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            return list(reader)
+    try:   
+        file = open("students.csv", "r", encoding='utf-8')
+        reader = csv.DictReader(file)
+        l = list(reader).copy()
+        file1 = open("students.csv", "w", encoding='utf-8')
+        return list(l)
     except FileNotFoundError:
         logger.warning("No students file found")
         return {"error": "No students found"}
-    
-    
-
 
 if __name__ == "__main__":
     import uvicorn
