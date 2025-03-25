@@ -10,7 +10,7 @@ export default function Home() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("http://localhost:8000/students");
+      const response = await fetch("https://backend-emailer-csv-1.onrender.com/students");
       if (!response.ok) throw new Error("Failed to fetch students");
       const data = await response.json();
       setStudents(data);
@@ -52,7 +52,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:8000/upload-csv/", {
+      const response = await fetch("https://backend-emailer-csv-1.onrender.com/upload-csv/", {
         method: "POST",
         body: formData,
       });
