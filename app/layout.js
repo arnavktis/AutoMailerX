@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider, UserButton, SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,12 +19,52 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body 
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        >
+          <header className="w-full p-6 flex justify-between items-center shadow-sm mr-4">
+            <h1 className="text-2xl font-bold">AutoMailerX</h1>
+            {/* <SignedIn>
+              <UserButton showName className="color-white" />
+            </SignedIn> */}
+            <SignedIn>
+              <UserButton 
+                showName 
+                appearance={{
+                  variables: {
+                    colorText: 'white'
+                  },
+                  elements: {
+                    userButtonNameText: 'text-white text-lg font-semibold ',
+                    // userButtonTrigger: 'text-white',
+                    userButtonTrigger: 'text-white scale-125 py-2 px-3 ',
+                    userButtonBox: 'text-white',
+                    userButtonAvatarBox: 'w-12 h-12 ' // Increase avatar size
+                  }
+                }} 
+              />
+            </SignedIn>
+          </header>
+
+          <main className="flex-grow p-4">
+            <SignedOut>
+              <div className="w-full flex justify-center">
+                <SignIn routing="hash" />
+              </div>
+            </SignedOut>
+            
+            <SignedIn>
+              {children}
+            </SignedIn>
+          </main>
+
+          <footer className="w-full p-4 text-center text-gray-500">
+            © {new Date().getFullYear()} AutoMailerX. Developed By Arnav
+          </footer>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
